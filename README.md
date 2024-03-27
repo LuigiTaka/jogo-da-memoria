@@ -12,3 +12,5 @@ npm install && npm run serve
 ```
 
 Depois é só acessar `localhost:9000` no navegador.
+
+![Preview do jogo da memória](site_preview.jpeg)
