@@ -1,0 +1,301 @@
+@font-face {
+    font-family: 'Cinzel Decorative';
+    src: url("/assets/CinzelDecorative-Regular.ttf") format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cinzel Decorative Bold';
+    src: url("/assets/CinzelDecorative-Bold.ttf") format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Cinzel Decorative Black';
+    src: url("/assets/CinzelDecorative-Black.ttf") format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 2rem;
+}
+
+:root {
+    --parallax-scale: 0;
+    --parallax-min-height: 44rem;
+    --container-offset-adjustment: 5rem;
+}
+
+/* disable if requested for accessibility reasons */
+@media (prefers-reduced-motion) {
+    :root {
+        --parallax-scale: 0;
+    }
+}
+
+body {
+    font-family: "Cinzel Decorative", Arial, serif;
+    z-index: 0;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.cinzel-decorative-regular {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.cinzel-decorative-bold {
+    font-family: "Cinzel Decorative Bold", serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.cinzel-decorative-black {
+    font-family: "Cinzel Decorative Black", serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.text-center {
+    text-align: center;
+}
+
+* {
+    border: 0;
+    margin: 0;
+}
+
+main {
+    height: 100vh;
+    position: relative;
+}
+
+#board {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 30px;
+    row-gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center;
+    align-content: stretch;
+}
+
+.card {
+    position: relative;
+    width: 200px;
+    height: 275px;
+    perspective: 700px;
+    cursor: pointer;
+}
+
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: transform 300ms;
+    transform-style: preserve-3d;
+}
+
+.card:hover .content {
+    box-shadow: rgba(0, 0, 0, 0.6) 0 19px 43px;
+    transform: translate3d(0px, -10px, 0px);
+    transition: 300ms;
+}
+
+.front,
+.back {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: white;
+    color: #03446A;
+    text-align: center;
+    font-size: 60px;
+    border-radius: 5px;
+    backface-visibility: hidden;
+}
+
+.front {
+    background-size: cover;
+    transform: rotateY(-180deg);
+}
+
+
+.back {
+    background-image: url("/assets/back.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.parallax__layer {
+    transform-origin: center top;
+    transform: scaleY(calc(1 / (1 - var(--parallax-scale))));
+}
+
+
+/* container around parallax layers */
+.parallax__group {
+    position: relative;
+    z-index: -1;
+    transform-origin: center top;
+    transform: scaleY(calc(1 - var(--parallax-scale)));
+    margin-top: calc(
+            var(--container-offset-adjustment)
+            +
+            (-1
+            *
+            max(100vh, var(--parallax-min-height)))
+    );
+    margin-bottom: calc(-1 * var(--container-offset-adjustment));
+}
+
+
+.parallax__layer--foreground {
+    position: relative;
+    top: 0;
+}
+
+.parallax__layer--background {
+    position: sticky;
+    z-index: -1;
+    top: 0;
+    transform-origin: center top;
+    transform: scaleY(calc(1 / (1 - var(--parallax-scale))));
+    height: 100vh;
+    min-height: max(100vh, var(--parallax-min-height));
+    width: 100vw;
+    background-attachment: fixed; /* legacy fallback */
+    background-image: url("/assets/background.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#UI {
+    background-color: #0a270761;
+    position: sticky;
+    bottom: 0;
+    height: 80px;
+    font-size: 2rem;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.card-0 {
+    background-image: url("/assets/0.webp");
+}
+
+.card-1 {
+    background-image: url("/assets/1.webp");
+}
+
+.card-2 {
+    background-image: url("/assets/2.webp");
+}
+
+.card-3 {
+    background-image: url("/assets/3.webp");
+}
+
+.card-4 {
+    background-image: url("/assets/4.webp");
+}
+
+.card-5 {
+    background-image: url("/assets/5.webp");
+}
+
+.card-6 {
+    background-image: url("/assets/6.webp");
+}
+
+.card-7 {
+    background-image: url("/assets/7.webp");
+}
+
+.card-8 {
+    background-image: url("/assets/8.webp");
+}
+
+.card-9 {
+    background-image: url("/assets/9.webp");
+}
+
+.card-10 {
+    background-image: url("/assets/10.webp");
+}
+
+.card-11 {
+    background-image: url("/assets/11.webp");
+}
+
+.card-12 {
+    background-image: url("/assets/12.webp");
+}
+
+.card-13 {
+    background-image: url("/assets/13.webp");
+}
+
+.card-14 {
+    background-image: url("/assets/14.webp");
+}
+
+.card-15 {
+    background-image: url("/assets/15.webp");
+}
+
+.card-16 {
+    background-image: url("/assets/16.webp");
+}
+
+.card-17 {
+    background-image: url("/assets/17.webp");
+}
+
+.card-18 {
+    background-image: url("/assets/18.webp");
+}
+
+.card-19 {
+    background-image: url("/assets/19.webp");
+}
+
+.card-20 {
+    background-image: url("/assets/20.webp");
+}
+
+.card-21 {
+    background-image: url("/assets/21.webp");
+}
+
+.card-22 {
+    background-image: url("/assets/22.webp");
+}
+
+.card-23 {
+    background-image: url("/assets/23.webp");
+}
+
+.card-24 {
+    background-image: url("/assets/24.webp");
+}
+
+.card-25 {
+    background-image: url("/assets/25.webp");
+}
