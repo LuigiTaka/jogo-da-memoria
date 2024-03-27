@@ -28,25 +28,6 @@ function shuffle(array) {
     return array;
 }
 
-function AlphabetGenerator() {
-    this.startCharCode = 'A'.charCodeAt(0);
-    this.endCharCode = 'D'.charCodeAt(0);
-    this.currentCharCode = this.startCharCode;
-}
-
-AlphabetGenerator.prototype[Symbol.iterator] = function () {
-    return {
-        next: () => {
-            if (this.currentCharCode <= this.endCharCode) {
-                return {done: false, value: String.fromCharCode(this.currentCharCode++)};
-            } else {
-                return {done: true};
-            }
-        },
-    };
-};
-
-
 const GAME_STATE = {
 
     clicks: 0,
@@ -59,6 +40,8 @@ const GAME_STATE = {
         if (GAME_STATE.flipped[0].card.image === GAME_STATE.flipped[1].card.image) {
             GAME_STATE.points += 1;
             //point animation
+            GAME_STATE.flipped[0].element.removeEventListener('click', GAME_STATE.clickEvent);
+            GAME_STATE.flipped[1].element.removeEventListener('click', GAME_STATE.clickEvent);
         } else {
             GAME_STATE.flipped[0].animation.reverse();
             GAME_STATE.flipped[1].animation.reverse();
@@ -93,38 +76,40 @@ const GAME_STATE = {
         return $div;
     },
 
+    clickEvent: (e) => {
+        const $cardContentWrapper = e.target.parentElement;
+
+        const cardObj =
+            GAME_STATE.deck.find((obj) => obj.id == $cardContentWrapper.dataset.id);
+
+        if (GAME_STATE.flipped.find(obj => obj.card.image == cardObj.image && obj.card.id == cardObj.id)) {
+            return;
+        }
+
+        const animation = $cardContentWrapper.animate([{
+            transform: "rotateY(180deg)",
+            "animation-fill-mode": "forwards"
+        }], {
+            duration: 300,
+            iterations: 1,
+            fill: "forwards"
+        });
+        animation.play();
+
+        GAME_STATE.clicks += 1;
+        GAME_STATE.flipped.push({card: cardObj, animation: animation, element: $cardContentWrapper.parentElement});
+        if (GAME_STATE.flipped.length === 2) {
+            setTimeout(() => {
+                GAME_STATE.checkFlippedCards();
+            }, 333)
+        }
+
+
+    },
+
     addCardEvents: ($card) => {
 
-        $card.addEventListener("click", (e) => {
-            const $cardContentWrapper = e.target.parentElement;
-
-            const cardObj =
-                GAME_STATE.deck.find((obj) => obj.id == $cardContentWrapper.dataset.id);
-
-            if (GAME_STATE.flipped.find(obj => obj.card.image == cardObj.image && obj.card.id == cardObj.id)) {
-                return;
-            }
-
-            const animation = $cardContentWrapper.animate([{
-                transform: "rotateY(180deg)",
-                "animation-fill-mode": "forwards"
-            }], {
-                duration: 300,
-                iterations: 1,
-                fill: "forwards"
-            });
-            animation.play();
-
-            GAME_STATE.clicks += 1;
-            GAME_STATE.flipped.push({card: cardObj, animation: animation});
-            if (GAME_STATE.flipped.length === 2) {
-                setTimeout(() => {
-                    GAME_STATE.checkFlippedCards();
-                }, 333)
-            }
-
-
-        });
+        $card.addEventListener("click", GAME_STATE.clickEvent);
 
         $card.addEventListener("mouseout", (e) => {
             e.stopPropagation()
@@ -170,9 +155,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
         $ui = document.getElementById('UI');
 
     let deck = [];
-
-    // Example usage:
-    const alphabet = new AlphabetGenerator();
 
     let id = 0;
     for (let i = 0; i < 12; i++) {
