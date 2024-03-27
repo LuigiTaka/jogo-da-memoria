@@ -25,6 +25,20 @@ h1 {
     margin-bottom: 2rem;
 }
 
+a {
+    color: yellow;
+    text-decoration: none;
+}
+
+p {
+    text-align: center;
+    color: white;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
 :root {
     --parallax-scale: 0;
     --parallax-min-height: 44rem;
@@ -182,6 +196,7 @@ main {
     background-image: url("/assets/background.webp");
     background-repeat: no-repeat;
     background-size: cover;
+    filter: brightness(.5);
 }
 
 #UI {
