@@ -96,8 +96,15 @@ const GAME_STATE = {
     addCardEvents: ($card) => {
 
         $card.addEventListener("click", (e) => {
-            console.info('CLICKS')
             const $cardContentWrapper = e.target.parentElement;
+
+            const cardObj =
+                GAME_STATE.deck.find((obj) => obj.id == $cardContentWrapper.dataset.id);
+
+            if (GAME_STATE.flipped.find(obj => obj.card.image == cardObj.image && obj.card.id == cardObj.id)) {
+                return;
+            }
+
             const animation = $cardContentWrapper.animate([{
                 transform: "rotateY(180deg)",
                 "animation-fill-mode": "forwards"
@@ -107,10 +114,6 @@ const GAME_STATE = {
                 fill: "forwards"
             });
             animation.play();
-
-            const cardObj =
-                GAME_STATE.deck.find((obj) => obj.id == $cardContentWrapper.dataset.id);
-
 
             GAME_STATE.clicks += 1;
             GAME_STATE.flipped.push({card: cardObj, animation: animation});
