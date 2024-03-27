@@ -1,8 +1,12 @@
-function createCard({id, image}) {
+import './index.css';
+import './'
+
+function createCard({id, className, image}) {
 
     return {
         id: id,
         image: image,
+        className: className,
     }
 }
 
@@ -64,7 +68,7 @@ const GAME_STATE = {
         GAME_STATE.updateUI(GAME_STATE.$ui);
     },
 
-    makeCard: ({image, id}) => {
+    makeCard: ({image, id, className}) => {
 
         let $div = document.createElement('div'),
             $image = document.createElement('div'),
@@ -81,7 +85,8 @@ const GAME_STATE = {
         $content.appendChild($image);
         $content.appendChild($back);
 
-        $image.style.backgroundImage = `url(${image})`;
+        $image.classList.add(className);
+        //$image.style.backgroundImage = `url(${image})`;
         //$image.innerText = image;
 
         $div.appendChild($content);
@@ -168,9 +173,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
     let id = 0;
     for (let i = 0; i < 12; i++) {
-        deck.push(createCard({id: id, image: `/assets/${i}.webp`}))
+        deck.push(createCard({id: id, className: `card-${i}`, image: i}))
         id++;
-        deck.push(createCard({id: id, image: `/assets/${i}.webp`}));
+        deck.push(createCard({id: id, className: `card-${i}`, image: i}));
         id++;
     }
 
